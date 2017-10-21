@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import sys
 class Config(object):
     def __init__(self,configfile):
         self._config={}
@@ -64,8 +65,18 @@ class UserData(object):
         with open(outputfile,'w') as f:
             for k,v in d.items():
                 line=k+','+v[0]+','+v[1]+','+v[2]+','+v[3]+'\n'
-                print(line)
+               # print(line)
                 f.write(line)
-
-staff=UserData('user.csv')
-staff.dumptofile('gongzi.csv')       
+try:
+    args=sys.argv[1:]
+    index=args.index('-c')
+    configfile=args[index+1]
+    index=args.index('-d')
+    userfile=args[index+1]
+    index=args.index('-o')
+    printfile=args[index+1]
+except:
+    exit(0)
+staff=UserData(userfile)
+staff.dumptofile(printfile)
+       
