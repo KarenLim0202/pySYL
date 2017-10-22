@@ -1,19 +1,26 @@
 #!/usr/bin/env python3
 import sys
+import os
 class Config(object):
     def __init__(self,configfile):
         self._config={}
         self._filename=configfile
         with open(self._filename) as file:
             for line in file:
-                line=line.strip()
-                line=line.split('=')
-                self._config[line[0].strip()]=line[1].strip()
+                try:
+                    line=line.strip()
+                    line=line.split('=')
+                    self._config[line[0].strip()]=line[1].strip()
+                except:
+                    exit(0)
     def get_config(self,config_option):
-        return float(self._config[config_option])
+        try:
+            return float(self._config[config_option])
+        except:
+            exit(0)
 
 class UserData(object):
-    def __init__(self,userdatafile):
+    def __init__(self,userdatafile,configfile):
         self._userdata={}
         self._filename=userdatafile
         with open(self._filename) as file:
@@ -23,7 +30,7 @@ class UserData(object):
                 self._userdata[line[0]]=line[1]
  
     def calculator(self):
-        ins=Config('test.cfg')
+        ins=Config(configfile)
         insurance_rate=ins.get_config('YangLao')+ins.get_config('YiLiao')+ins.get_config('ShiYe')+ins.get_config('GongShang')+ins.get_config('ShengYu')+ins.get_config('GongJiJin')
         tlist=[(3/100,0),(10/100,105),(20/100,555),(25/100,1005),(30/100,2755),(35/100,5505),(45/100,13505)]
         for n,s in self._userdata.items():
@@ -75,14 +82,21 @@ try:
     userfile=args[index+1]
     index=args.index('-o')
     printfile=args[index+1]
+    if os.path.exists(configfile) and os.path.exists(userfile) and os.path.exists(printfile):
+        pass
+    else:
+        #print("")
+        exit(0)
+
     with open(configfile) as file:
         pass
     with open(userfile) as file:
         pass
-    with open(printfile) as file:
+    with open(printfile,'w') as file:
         pass
 except:
+    print("Parameter Error")
     exit(0)
-staff=UserData(userfile)
+staff=UserData(userfile,configfile)
 staff.dumptofile(printfile)
        
