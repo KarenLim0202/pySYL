@@ -75,6 +75,12 @@ try:
     userfile=args[index+1]
     index=args.index('-o')
     printfile=args[index+1]
+    with open(configfile) as file:
+        pass
+    with open(userfile) as file:
+        pass
+    with open(printfile) as file:
+        pass
 except:
     exit(0)
 staff=UserData(userfile)
