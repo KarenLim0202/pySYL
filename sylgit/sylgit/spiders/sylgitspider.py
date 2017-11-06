@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 import scrapy
-
+from sylgit.items import SylgitItem
 
 class SylgitspiderSpider(scrapy.Spider):
     name = 'sylgitspider'
    # allowed_domains = ['github.com']
    # start_urls = ['http://github.com/']
-mport scrapy
+
 
     @property
     def start_urls(self):

@@ -10,7 +10,9 @@ from datetime import datetime
 
 class SylgitPipeline(object):
     def process_item(self, item, spider):
-        item['update_time']=datetime.strptime(item['update_time'],)
+        item['update_time']=datetime.strptime(item['update_time'],'%Y-%m-%dT%H:%M:%SZ')
+        item['name']=item['name'].strip()
+        self.session.add(Repository(**item))
 
         return item
 
